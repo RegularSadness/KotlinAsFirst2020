@@ -3,6 +3,7 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
+import kotlin.math.abs
 
 /**
  * Пример
@@ -39,7 +40,7 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = when {
  * Дан номер месяца (от 1 до 12 включительно) и год (положительный).
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
-fun daysInMonth(month: Int, year: Int): Int = {
+fun daysInMonth(month: Int, year: Int): Int  {
     return if ((year % 100 == 0) && (year % 400 != 0) && (month == 2)) 28
     else return if ((year % 4 == 0) && (month == 2)) 29
     else when (month) {
