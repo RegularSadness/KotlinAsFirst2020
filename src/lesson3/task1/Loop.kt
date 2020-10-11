@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import lesson1.task1.sqr
 import kotlin.math.*
 
 // Урок 3: циклы
@@ -106,11 +107,11 @@ fun fib(n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var minDivisor = 2
-    while (minDivisor < n / 2) {
-        if (n % minDivisor == 0) return minDivisor
-        minDivisor += 1
-    }
+    if (n % 2 == 0) return 2
+    var divisor = 3
+    while ((n % divisor != 0) && (sqr(divisor) <= n))
+        divisor += 2
+    if (n % divisor == 0) return divisor
     return n
 }
 
