@@ -101,6 +101,7 @@ fun fib(n: Int): Int {
     }
     return result
 }
+
 /**
  * Простая (2 балла)
  *
