@@ -28,7 +28,8 @@ fun isNumberHappy(number: Int): Boolean = (number / 1000 + number / 100 % 10) ==
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = y1 == y2 || x1 == x2 || abs(y1 - y2) == abs(x1 - x2)
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
+    y1 == y2 || x1 == x2 || abs(y1 - y2) == abs(x1 - x2)
 
 /**
  * Простая (2 балла)
@@ -40,8 +41,8 @@ fun daysInMonth(month: Int, year: Int): Int {
     return when (month) {
         1, 3, 5, 7, 8, 10, 12 -> 31
         4, 6, 9, 11 -> 30
-        else -> if ((year % 100 == 0) && (year % 400 != 0)) 28
-        else if ((year % 4 == 0) && (month == 2)) 29
+        else -> if (year % 100 == 0 && year % 400 != 0) 28
+        else if (year % 4 == 0 && month == 2) 29
         else 28
     }
 }

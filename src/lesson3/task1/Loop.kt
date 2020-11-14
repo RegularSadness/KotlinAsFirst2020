@@ -110,7 +110,7 @@ fun fib(n: Int): Int {
 fun minDivisor(n: Int): Int {
     if (n % 2 == 0) return 2
     var divisor = 3
-    while ((n % divisor != 0) && (sqr(divisor) <= n))
+    while (n % divisor != 0 && (sqr(divisor) <= n))
         divisor += 2
     if (n % divisor == 0) return divisor
     return n
@@ -215,7 +215,24 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    val briefX = x % (2 * PI)
+
+    val sqrX = briefX * briefX
+
+    var a = briefX
+    var factorialBase = 1
+
+    var sinx = 0.0
+
+    do {
+        sinx += a
+        a *= -1.0 * sqrX / (2 * factorialBase) / (2 * factorialBase + 1)
+        factorialBase += 1
+
+    } while (abs(a) >= eps)
+    return sinx
+}
 
 /**
  * Средняя (4 балла)
@@ -226,7 +243,23 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.cos и другие стандартные реализации функции косинуса в этой задаче запрещается.
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+fun cos(x: Double, eps: Double): Double {
+    val briefX = x % (2 * PI)
+
+    val sqrX = briefX * briefX
+
+    var a = 1.0
+    var factorialBase = 1
+
+    var cosx = 0.0
+    do {
+        cosx += a
+        a *= -1.0 * sqrX / (2 * factorialBase - 1) / (2 * factorialBase)
+        factorialBase += 1
+
+    } while (abs(a) >= eps)
+    return cosx
+}
 
 /**
  * Сложная (4 балла)
