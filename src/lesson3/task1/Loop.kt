@@ -110,7 +110,7 @@ fun fib(n: Int): Int {
 fun minDivisor(n: Int): Int {
     if (n % 2 == 0) return 2
     var divisor = 3
-    while (n % divisor != 0 && (sqr(divisor) <= n))
+    while (n % divisor != 0 && sqr(divisor) <= n)
         divisor += 2
     if (n % divisor == 0) return divisor
     return n

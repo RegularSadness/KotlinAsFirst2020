@@ -81,6 +81,20 @@ fun deleteMarked(inputName: String, outputName: String) {
     writer.close()
 }
 
+fun countIgnoreCase(needle: String, haystack: String): Int {
+    var count = 0
+
+    val lowerHaystack = haystack.toLowerCase()
+    val lowerNeedle = needle.toLowerCase()
+    var idx = lowerHaystack.indexOf(lowerNeedle)
+    while (idx != -1) {
+        count++
+        idx = lowerHaystack.indexOf(lowerNeedle, idx + 1)
+    }
+
+    return count
+}
+
 /**
  * Средняя (14 баллов)
  *
@@ -90,7 +104,21 @@ fun deleteMarked(inputName: String, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO()
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
+    val entries = mutableMapOf<String, Int>()
+
+    val subs = substrings.toSet()
+
+    for (str in subs)
+        entries[str] = 0
+
+    val reader = File(inputName).bufferedReader()
+    reader.forEachLine {
+        for (str in subs)
+            entries[str] = entries[str]!! + countIgnoreCase(str, it)
+    }
+    return entries
+}
 
 
 /**

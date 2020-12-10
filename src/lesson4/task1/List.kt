@@ -292,4 +292,78 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+
+    val ones = mapOf(
+        1 to "один", 2 to "два", 3 to "три", 4 to "четыре", 5 to "пять",
+        6 to "шесть", 7 to "семь", 8 to "восемь", 9 to "девять",
+        11 to "одиннадцать", 12 to "двенадцать", 13 to "тринадцать", 14 to "четырнадцать", 15 to "пятнадцать",
+        16 to "шестнадцать", 17 to "семнадцать", 18 to "восемнадцать", 19 to "девятнадцать"
+    )
+
+    val tens = mapOf(
+        1 to "десять", 2 to "двадцать", 3 to "тридцать", 4 to "сорок", 5 to "пятьдесят",
+        6 to "шестьдесят", 7 to "семьдесят", 8 to "восемьдесят", 9 to "девяносто"
+    )
+
+    val hundreds = mapOf(
+        1 to "сто", 2 to "двести", 3 to "триста", 4 to "четыреста", 5 to "пятьсот",
+        6 to "шестьсот", 7 to "семьсот", 8 to "восемьсот", 9 to "девятьсот"
+    )
+
+    val thousandsRus = "тысяч"
+    val thousands = mapOf(
+        0 to "тысяч", 1 to "одна тысяча", 2 to "две тысячи", 3 to "три тысячи", 4 to "четыре тысячи",
+        5 to ones[5] + " " + thousandsRus, 6 to ones[6] + " " + thousandsRus, 7 to ones[7] + " " + thousandsRus,
+        8 to ones[8] + " " + thousandsRus, 9 to ones[9] + " " + thousandsRus
+    )
+
+    var result = ""
+
+    val digits = n.toString().toList().reversed().map { it.toInt() - '0'.toInt() }
+
+    if (digits.size > 5 && digits[5] >= 1) {
+        result += hundreds[digits[5]] + " "
+    }
+
+    if (digits.size > 4 && (digits[4] > 1 || digits[4] == 1 && digits[3] == 0)) {
+        result += tens[digits[4]] + " "
+    }
+
+    if (digits.size > 3) {
+        result += if (digits[3] >= 1) {
+            if (digits.size > 4 && digits[4] == 1) {
+                ones[digits[4] * 10 + digits[3]] + " " + thousandsRus
+            } else {
+                thousands[digits[3]]
+            }
+
+        } else {
+            thousandsRus
+        }
+
+        if (digits[0] != 0 || digits[1] != 0 || digits[2] != 0)
+            result += " "
+    }
+
+    if (digits.size > 2 && digits[2] >= 1) {
+        result += hundreds[digits[2]]
+        if (digits[1] > 0 || digits[0] > 0) result += " "
+    }
+
+    if (digits.size > 1 && (digits[1] > 1 || digits[1] == 1 && digits[0] == 0)) {
+        result += tens[digits[1]]
+        if (digits[0] > 0) result += " "
+    }
+
+    if (digits[0] >= 1) {
+        result += if (digits.size > 1 && digits[1] == 1) {
+            ones[digits[1] * 10 + digits[0]]
+        } else {
+            ones[digits[0]]
+        }
+    }
+
+    return result
+
+}
