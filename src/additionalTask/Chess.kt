@@ -18,8 +18,8 @@ fun main(fileName: String, limit: Int): MutableList<Coordinate> {
     val lineCount = 9
 
     val pawnsCoordinates = getCoordinates(file, lineCount, 'p')
-    if (pawnsCoordinates.size != 3) {
-        throw IllegalArgumentException("File should contains 3 \'p\' char")
+    if (pawnsCoordinates.size < 1) {
+        throw IllegalArgumentException("File should contains > 1 \'p\' char")
     }
     val horseCoordinates = getCoordinates(file, lineCount, 'N')
     if (horseCoordinates.size != 1) {
@@ -66,46 +66,25 @@ fun findPath(
         return mutableListOf()
     }
     iteration++
-    val leftAndDownCoordinate = moveLeftAndDown(coordinate)
-    val resultPath = checkRecursive(copyList(pawns), leftAndDownCoordinate, path, iteration, limit)
-    if (resultPath.isNotEmpty()) {
-        return resultPath
+
+    val possibleNextCoordinates = mutableListOf<Coordinate>()
+    possibleNextCoordinates.add(moveLeftAndDown(coordinate))
+    possibleNextCoordinates.add(moveLeftAndUp(coordinate))
+    possibleNextCoordinates.add(moveUpAndLeft(coordinate))
+    possibleNextCoordinates.add(moveUpAndRight(coordinate))
+    possibleNextCoordinates.add(moveRightAndUp(coordinate))
+    possibleNextCoordinates.add(moveRightAndDown(coordinate))
+    possibleNextCoordinates.add(moveDownAndRight(coordinate))
+    possibleNextCoordinates.add(moveDownAndLeft(coordinate))
+
+    for (possibleNextCoordinate in possibleNextCoordinates) {
+        val resultPath = checkRecursive(copyList(pawns), possibleNextCoordinate, path, iteration, limit)
+        if (resultPath.isNotEmpty()) {
+            return resultPath
+        }
     }
-    val leftAndUpCoordinate = moveLeftAndUp(coordinate)
-    val resultPath1 = checkRecursive(copyList(pawns), leftAndUpCoordinate, path, iteration, limit)
-    if (resultPath1.isNotEmpty()) {
-        return resultPath1
-    }
-    val upAndLeftCoordinate = moveUpAndLeft(coordinate)
-    val resultPath2 = checkRecursive(copyList(pawns), upAndLeftCoordinate, path, iteration, limit)
-    if (resultPath2.isNotEmpty()) {
-        return resultPath2
-    }
-    val upAndRightCoordinate = moveUpAndRight(coordinate)
-    val resultPath3 = checkRecursive(copyList(pawns), upAndRightCoordinate, path, iteration, limit)
-    if (resultPath3.isNotEmpty()) {
-        return resultPath3
-    }
-    val rightAndUpCoordinate = moveRightAndUp(coordinate)
-    val resultPath4 = checkRecursive(copyList(pawns), rightAndUpCoordinate, path, iteration, limit)
-    if (resultPath4.isNotEmpty()) {
-        return resultPath4
-    }
-    val rightAndDownCoordinate = moveRightAndDown(coordinate)
-    val resultPath5 = checkRecursive(copyList(pawns), rightAndDownCoordinate, path, iteration, limit)
-    if (resultPath5.isNotEmpty()) {
-        return resultPath5
-    }
-    val downAndRightCoordinate = moveDownAndRight(coordinate)
-    val resultPath6 = checkRecursive(copyList(pawns), downAndRightCoordinate, path, iteration, limit)
-    if (resultPath6.isNotEmpty()) {
-        return resultPath6
-    }
-    val downAndLeftCoordinate = moveDownAndLeft(coordinate)
-    val resultPath7 = checkRecursive(copyList(pawns), downAndLeftCoordinate, path, iteration, limit)
-    return if (resultPath7.isNotEmpty()) {
-        resultPath7
-    } else mutableListOf()
+
+    return mutableListOf()
 }
 
 fun checkRecursive(
