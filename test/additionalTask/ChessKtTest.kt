@@ -21,6 +21,7 @@ internal class ChessKtTest {
         )
         val actualList = main("input/Chess.txt", 9)
         assertEquals(actualList, expectedList)
+        //println(actualList)
 
     }
 

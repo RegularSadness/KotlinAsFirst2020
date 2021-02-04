@@ -94,16 +94,22 @@ fun checkRecursive(
     iteration: Int,
     limit: Int
 ): MutableList<Coordinate> {
+//    println(coordinate)
     if (!isValid(coordinate)) {
+//        println("out of field")
         return mutableListOf()
     }
     pawns.remove(coordinate)
     return if (pawns.isEmpty() || path.isNotEmpty()) {
+//        println("all found")
+//        println(coordinate)
         path.add(coordinate)
         path
     } else {
         val resultPath = findPath(coordinate, iteration, pawns, path, limit)
         if (resultPath.isNotEmpty()) {
+//            println("get back")
+//            println(coordinate)
             resultPath.add(coordinate)
             resultPath
         } else {
