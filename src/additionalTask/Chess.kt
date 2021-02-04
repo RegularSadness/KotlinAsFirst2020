@@ -33,6 +33,28 @@ fun main(fileName: String, limit: Int): MutableList<Coordinate> {
         val message = String.format("The number of moves exceeds the limit %s", limit)
         throw RuntimeException(message)
     }
+
+    findPath.reverse()
+    val outputFile = File("input/ChessOutput.txt")
+    var resultOutput = ""
+    var currentLine = 9
+    file.forEachLine {
+        currentLine--
+        var lineForWriting = it
+        for (i in 1..8) {
+            val currentCoordinate = Coordinate(i, currentLine)
+            if (findPath.contains(currentCoordinate)) {
+                val coordinateIndex = findPath.indexOf(currentCoordinate)
+                lineForWriting = lineForWriting.substring(0, i - 1) + coordinateIndex + lineForWriting.substring(
+                    i,
+                    lineForWriting.length
+                )
+            }
+        }
+        resultOutput = resultOutput + lineForWriting + System.lineSeparator()
+        //println(lineForWriting)
+    }
+    outputFile.writeText(resultOutput)
     return findPath
 }
 

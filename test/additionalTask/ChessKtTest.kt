@@ -10,14 +10,15 @@ internal class ChessKtTest {
     @Test
     fun pathFindSuccess() {
         val expectedList = mutableListOf<Coordinate>(
-            Coordinate(6, 3),
-            Coordinate(7, 5),
-            Coordinate(6, 7),
-            Coordinate(4, 8),
-            Coordinate(2, 7),
-            Coordinate(4, 6),
+            Coordinate(2, 6),
             Coordinate(3, 8),
-            Coordinate(2, 6)
+            Coordinate(4, 6),
+            Coordinate(2, 7),
+            Coordinate(4, 8),
+            Coordinate(6, 7),
+            Coordinate(7, 5),
+            Coordinate(6, 3)
+
         )
         val actualList = main("input/Chess.txt", 9)
         assertEquals(actualList, expectedList)
