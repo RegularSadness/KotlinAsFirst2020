@@ -59,13 +59,13 @@ class Graph {
      */
     fun dfs(start: String, finish: String): Int = dfs(this[start], this[finish], setOf()) ?: -1
 
-    private fun dfs(start: Vertex, finish: Vertex, visited: Set<Vertex>): Int? =
-        if (start == finish) 0
-        else {
-            val min = start.neighbors
-                .filter { it !in visited }
-                .mapNotNull { dfs(it, finish, visited + start) }
-                .min()
-            if (min == null) null else min + 1
-        }
+    private fun dfs(start: Vertex, finish: Vertex, visited: Set<Vertex>): Int? = TODO()
+//        if (start == finish) 0
+//        else {
+//            val min = start.neighbors
+//                .filter { it !in visited }
+//                .mapNotNull { dfs(it, finish, visited + start) }
+//                .min()
+//            if (min == null) null else min + 1
+//        }
 }
