@@ -78,7 +78,7 @@ fun <E> createMatrixWithValues(height: Int, width: Int, values: List<E>): Matrix
  * Реализация интерфейса "матрица"
  */
 class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : Matrix<E> {
-    public var list = mutableListOf<E>() //TODO: do final and change in new object
+    var list = mutableListOf<E>() //TODO: do final and change in new object
 
     init {
         val elementsCount = width * height
