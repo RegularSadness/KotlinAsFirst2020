@@ -329,39 +329,39 @@ fun canOpenLock(key: Matrix<Int>, lock: Matrix<Int>): Triple<Boolean, Int, Int> 
  * 0  4 13  6
  * 3 10 11  8
  */
-fun fifteenGameMoves(matrix: Matrix<Int>, moves: List<Int>): Matrix<Int> = TODO()
-//    var zeroCoordinate = matrix[0]
-//    for (move in moves) {
-//        val currentCoordinate = matrix[move]
-//        changeValues(currentCoordinate, move, zeroCoordinate, matrix)
-////        if ((currentCoordinate.column == zeroCoordinate.column) &&
-////            (abs(currentCoordinate.row - zeroCoordinate.row) == 1) ||
-////            (currentCoordinate.row == zeroCoordinate.row) &&
-////            (abs(currentCoordinate.column - zeroCoordinate.column) == 1)
-////        ) {
-////            matrix[zeroCoordinate] = move
-////            matrix[currentCoordinate] = 0
-////            zeroCoordinate = currentCoordinate
-////
-////        } else
-////            throw IllegalStateException("The number is not near zero")
-//        zeroCoordinate = currentCoordinate
-//}
-//    return matrix
-//}
-//
-//fun changeValues(currentCoordinate: Cell, value: Int, zeroCoordinate: Cell, matrix: Matrix<Int>) {
-//    if ((currentCoordinate.column == zeroCoordinate.column) &&
-//        (abs(currentCoordinate.row - zeroCoordinate.row) == 1) ||
-//        (currentCoordinate.row == zeroCoordinate.row) &&
-//        (abs(currentCoordinate.column - zeroCoordinate.column) == 1)
-//    ) {
-//        matrix[zeroCoordinate] = value
-//        matrix[currentCoordinate] = 0
-//
-//    } else
-//        throw IllegalStateException("The number is not near zero")
-//}
+fun fifteenGameMoves(matrix: Matrix<Int>, moves: List<Int>): Matrix<Int> {
+    var zeroCoordinate = getCellByValue(matrix, 0)
+    for (move in moves) {
+        val currentCoordinate = getCellByValue(matrix, move)
+        changeValues(currentCoordinate, move, zeroCoordinate, matrix)
+        zeroCoordinate = currentCoordinate
+    }
+    return matrix
+}
+
+fun getCellByValue(matrix: Matrix<Int>, value: Int): Cell {
+    for (i in 0 until matrix.width) {
+        for (j in 0 until matrix.height) {
+            if (matrix[i, j] == value) {
+                return Cell(i, j)
+            }
+        }
+    }
+    throw RuntimeException("Matrix doesn't contain value $value")
+}
+
+fun changeValues(currentCoordinate: Cell, value: Int, zeroCoordinate: Cell, matrix: Matrix<Int>) {
+    if ((currentCoordinate.column == zeroCoordinate.column) &&
+        (abs(currentCoordinate.row - zeroCoordinate.row) == 1) ||
+        (currentCoordinate.row == zeroCoordinate.row) &&
+        (abs(currentCoordinate.column - zeroCoordinate.column) == 1)
+    ) {
+        matrix[zeroCoordinate] = value
+        matrix[currentCoordinate] = 0
+
+    } else
+        throw IllegalStateException("The number is not near zero")
+}
 
 /**
  * Очень сложная (32 балла)
