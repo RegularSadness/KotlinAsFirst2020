@@ -30,7 +30,7 @@ interface Matrix<E> {
 
     operator fun get(cell: Cell): E
 
-//    operator fun get(value: E): Cell
+    //operator fun get(value: E): Cell
 
     /**
      * Запись в ячейку.
@@ -40,6 +40,14 @@ interface Matrix<E> {
 
     operator fun set(cell: Cell, value: E)
 }
+
+//     fun <E> MatrixImpl<E>.get(value: E): Cell {
+//         var elementIndex = list.indexOf(value)
+//         var row = elementIndex / width
+//         var column = elementIndex % height
+//         return Cell(row, column)  //TODO what if more then 1 element of value
+//     }
+
 
 /**
  * Простая (2 балла)
@@ -99,7 +107,7 @@ class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : M
 
     override fun get(cell: Cell): E = get(cell.row, cell.column)
 
-//    override fun get(value: E): Cell {
+//    override  fun get(value: E): Cell {
 //        var elementIndex = list.indexOf(value)
 //        var row = elementIndex / width
 //        var column = elementIndex % height
@@ -147,3 +155,9 @@ class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : M
     }
 }
 
+interface A<E> {
+
+}
+
+fun A<Int>.swap(index1: Int, index2: Int) {
+}
