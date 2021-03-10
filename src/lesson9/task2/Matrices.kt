@@ -402,168 +402,168 @@ fun changeValues(currentCoordinate: Cell, value: Int, zeroCoordinate: Cell, matr
  *
  * Перед решением этой задачи НЕОБХОДИМО решить предыдущую
  */
-fun fifteenGameSolution(matrix: Matrix<Int>): List<Int> {
-    var firstSolution = createMatrixWithValues(4, 4, listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0))
-    var secondSolution = createMatrixWithValues(4, 4, listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 14, 0))
-    val resultSolution = mutableListOf<Int>()
-    val firstMatrix = createCopyOfMatrix(matrix)
-    val createdMatrix = HashSet<Matrix<Int>>()
-    return calculateMatrix(matrix, firstSolution, secondSolution, resultSolution, createdMatrix).asReversed()
-}
+fun fifteenGameSolution(matrix: Matrix<Int>): List<Int> = TODO()
+//    var firstSolution = createMatrixWithValues(4, 4, listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0))
+//    var secondSolution = createMatrixWithValues(4, 4, listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 14, 0))
+//    val resultSolution = mutableListOf<Int>()
+//    val firstMatrix = createCopyOfMatrix(matrix)
+//    val createdMatrix = HashSet<Matrix<Int>>()
+//    return calculateMatrix(matrix, firstSolution, secondSolution, resultSolution, createdMatrix).asReversed()
+//}
+//
+//fun moveUp(matrix: Matrix<Int>, passedMatrix: HashSet<Matrix<Int>>): Pair<Matrix<Int>, Int> {
+//    var copyMatrix = createCopyOfMatrix(matrix)
+//    val zeroCoordinate = copyMatrix.get(0)
+//    if (zeroCoordinate.row < copyMatrix.height - 1) {
+//        val currentCoordinate = Cell(zeroCoordinate.row + 1, zeroCoordinate.column)
+//        val valueForMove = copyMatrix.get(currentCoordinate)
+//        changeValues(currentCoordinate, valueForMove, zeroCoordinate, copyMatrix)
+//        if (passedMatrix.contains(copyMatrix)){
+//            return Pair(matrix, -1)
+//        } else {
+//            passedMatrix.add(copyMatrix)
+//        }
+//
+////        println("moveUP:")
+////        println(copyMatrix)
+////        println("")
+//        return Pair(copyMatrix, valueForMove)
+//    }
+//    return Pair(matrix, -1)
+//}
 
-fun moveUp(matrix: Matrix<Int>, passedMatrix: HashSet<Matrix<Int>>): Pair<Matrix<Int>, Int> {
-    var copyMatrix = createCopyOfMatrix(matrix)
-    val zeroCoordinate = copyMatrix.get(0)
-    if (zeroCoordinate.row < copyMatrix.height - 1) {
-        val currentCoordinate = Cell(zeroCoordinate.row + 1, zeroCoordinate.column)
-        val valueForMove = copyMatrix.get(currentCoordinate)
-        changeValues(currentCoordinate, valueForMove, zeroCoordinate, copyMatrix)
-        if (passedMatrix.contains(copyMatrix)){
-            return Pair(matrix, -1)
-        } else {
-            passedMatrix.add(copyMatrix)
-        }
-
-//        println("moveUP:")
-//        println(copyMatrix)
-//        println("")
-        return Pair(copyMatrix, valueForMove)
-    }
-    return Pair(matrix, -1)
-}
-
-fun moveRight(matrix: Matrix<Int>, passedMatrix: HashSet<Matrix<Int>>): Pair<Matrix<Int>, Int> {
-    val copyMatrix = createCopyOfMatrix(matrix)
-    val zeroCoordinate = copyMatrix.get(0)
-    if (zeroCoordinate.column > 0) {
-        val currentCoordinate = Cell(zeroCoordinate.row, zeroCoordinate.column - 1)
-        val valueForMove = copyMatrix.get(currentCoordinate)
-        changeValues(currentCoordinate, valueForMove, zeroCoordinate, copyMatrix)
-        if (passedMatrix.contains(copyMatrix)){
-            return Pair(matrix, -1)
-        } else {
-            passedMatrix.add(copyMatrix)
-        }
-
-//        println("moveUP:")
-//        println(copyMatrix)
-//        println("")
-        return Pair(copyMatrix, valueForMove)
-    }
-    return Pair(matrix, -1)
-}
-
-fun moveDown(matrix: Matrix<Int>, passedMatrix: HashSet<Matrix<Int>>): Pair<Matrix<Int>, Int>{
-    val copyMatrix = createCopyOfMatrix(matrix)
-    val zeroCoordinate = copyMatrix.get(0)
-    if (zeroCoordinate.row > 0) {
-        val currentCoordinate = Cell(zeroCoordinate.row - 1, zeroCoordinate.column)
-        val valueForMove = copyMatrix.get(currentCoordinate)
-        changeValues(currentCoordinate, valueForMove, zeroCoordinate, copyMatrix)
-        if (passedMatrix.contains(copyMatrix)){
-            return Pair(matrix, -1)
-        } else {
-            passedMatrix.add(copyMatrix)
-        }
-
-//        println("moveUP:")
-//        println(copyMatrix)
-//        println("")
-        return Pair(copyMatrix, valueForMove)
-    }
-    return  Pair(matrix, -1)
-}
-
-fun moveLeft(matrix: Matrix<Int>, passedMatrix: HashSet<Matrix<Int>>): Pair<Matrix<Int>, Int> {
-    val copyMatrix = createCopyOfMatrix(matrix)
-    val zeroCoordinate = copyMatrix.get(0)
-    if (zeroCoordinate.column < copyMatrix.height - 1) {
-        val currentCoordinate = Cell(zeroCoordinate.row, zeroCoordinate.column + 1)
-        val valueForMove = copyMatrix.get(currentCoordinate)
-        changeValues(currentCoordinate, valueForMove, zeroCoordinate, copyMatrix)
-        if (passedMatrix.contains(copyMatrix)){
-            return Pair(matrix, -1)
-        } else {
-            passedMatrix.add(copyMatrix)
-        }
-
-//        println("moveUP:")
-//        println(copyMatrix)
-//        println("")
-        return Pair(copyMatrix, valueForMove)
-    }
-    return Pair(matrix, -1)
-}
-
-fun calculateMatrix(matrix: Matrix<Int>, firstSolution: Matrix<Int>, secondSolution: Matrix<Int>, resultSolution: MutableList<Int>, passedMatrix: HashSet<Matrix<Int>>): List<Int> {
-
-    if (matrix.equals(firstSolution) || matrix.equals(secondSolution)) {
-        return resultSolution
-    }
-
-    val moveUpResult = moveUp(matrix, passedMatrix)
-    if (moveUpResult.second != -1) {
-        if (matrix.equals(firstSolution) || matrix.equals(secondSolution)) {
-            resultSolution.add(moveUpResult.second)
-            return resultSolution
-        } else {
-            println("up:")
-            println(matrix)
-            calculateMatrix(moveUpResult.first, firstSolution, secondSolution, resultSolution, passedMatrix)
-        }
-    }
-    if (!resultSolution.isEmpty()) {
-        resultSolution.add(moveUpResult.second)
-        return resultSolution
-    }
-
-    val moveRightResult = moveRight(matrix, passedMatrix)
-    if (moveRightResult.second != -1) {
-        if (matrix.equals(firstSolution) || matrix.equals(secondSolution)) {
-            resultSolution.add(moveRightResult.second)
-            return resultSolution
-        } else {
-            println("right:")
-            println(matrix)
-            calculateMatrix(moveRightResult.first, firstSolution, secondSolution, resultSolution, passedMatrix)
-        }
-    }
-    if (!resultSolution.isEmpty()) {
-        resultSolution.add(moveRightResult.second)
-        return resultSolution
-    }
-
-    val moveDownResult = moveDown(matrix, passedMatrix)
-    if (moveDownResult.second != -1) {
-        if (matrix.equals(firstSolution) || matrix.equals(secondSolution)) {
-            resultSolution.add(moveDownResult.second)
-            return resultSolution
-        } else {
-            println("down:")
-            println(matrix)
-            calculateMatrix(moveDownResult.first, firstSolution, secondSolution, resultSolution, passedMatrix)
-        }
-    }
-    if (!resultSolution.isEmpty()) {
-        resultSolution.add(moveDownResult.second)
-        return resultSolution
-    }
-
-    val moveLeftResult = moveLeft(matrix, passedMatrix)
-    if (moveLeftResult.second != -1) {
-        if (matrix.equals(firstSolution) || matrix.equals(secondSolution)) {
-            resultSolution.add(moveLeftResult.second)
-            return resultSolution
-        } else {
-            println("left:")
-            println(matrix)
-            calculateMatrix(moveLeftResult.first, firstSolution, secondSolution, resultSolution, passedMatrix)
-        }
-    }
-    if (!resultSolution.isEmpty()) {
-        resultSolution.add(moveLeftResult.second)
-        return resultSolution
-    }
-
-    return listOf()
-}
+//fun moveRight(matrix: Matrix<Int>, passedMatrix: HashSet<Matrix<Int>>): Pair<Matrix<Int>, Int> {
+//    val copyMatrix = createCopyOfMatrix(matrix)
+//    val zeroCoordinate = copyMatrix.get(0)
+//    if (zeroCoordinate.column > 0) {
+//        val currentCoordinate = Cell(zeroCoordinate.row, zeroCoordinate.column - 1)
+//        val valueForMove = copyMatrix.get(currentCoordinate)
+//        changeValues(currentCoordinate, valueForMove, zeroCoordinate, copyMatrix)
+//        if (passedMatrix.contains(copyMatrix)){
+//            return Pair(matrix, -1)
+//        } else {
+//            passedMatrix.add(copyMatrix)
+//        }
+//
+////        println("moveUP:")
+////        println(copyMatrix)
+////        println("")
+//        return Pair(copyMatrix, valueForMove)
+//    }
+//    return Pair(matrix, -1)
+//}
+//
+//fun moveDown(matrix: Matrix<Int>, passedMatrix: HashSet<Matrix<Int>>): Pair<Matrix<Int>, Int>{
+//    val copyMatrix = createCopyOfMatrix(matrix)
+//    val zeroCoordinate = copyMatrix.get(0)
+//    if (zeroCoordinate.row > 0) {
+//        val currentCoordinate = Cell(zeroCoordinate.row - 1, zeroCoordinate.column)
+//        val valueForMove = copyMatrix.get(currentCoordinate)
+//        changeValues(currentCoordinate, valueForMove, zeroCoordinate, copyMatrix)
+//        if (passedMatrix.contains(copyMatrix)){
+//            return Pair(matrix, -1)
+//        } else {
+//            passedMatrix.add(copyMatrix)
+//        }
+//
+////        println("moveUP:")
+////        println(copyMatrix)
+////        println("")
+//        return Pair(copyMatrix, valueForMove)
+//    }
+//    return  Pair(matrix, -1)
+//}
+//
+//fun moveLeft(matrix: Matrix<Int>, passedMatrix: HashSet<Matrix<Int>>): Pair<Matrix<Int>, Int> {
+//    val copyMatrix = createCopyOfMatrix(matrix)
+//    val zeroCoordinate = copyMatrix.get(0)
+//    if (zeroCoordinate.column < copyMatrix.height - 1) {
+//        val currentCoordinate = Cell(zeroCoordinate.row, zeroCoordinate.column + 1)
+//        val valueForMove = copyMatrix.get(currentCoordinate)
+//        changeValues(currentCoordinate, valueForMove, zeroCoordinate, copyMatrix)
+//        if (passedMatrix.contains(copyMatrix)){
+//            return Pair(matrix, -1)
+//        } else {
+//            passedMatrix.add(copyMatrix)
+//        }
+//
+////        println("moveUP:")
+////        println(copyMatrix)
+////        println("")
+//        return Pair(copyMatrix, valueForMove)
+//    }
+//    return Pair(matrix, -1)
+//}
+//
+//fun calculateMatrix(matrix: Matrix<Int>, firstSolution: Matrix<Int>, secondSolution: Matrix<Int>, resultSolution: MutableList<Int>, passedMatrix: HashSet<Matrix<Int>>): List<Int> {
+//
+//    if (matrix.equals(firstSolution) || matrix.equals(secondSolution)) {
+//        return resultSolution
+//    }
+//
+//    val moveUpResult = moveUp(matrix, passedMatrix)
+//    if (moveUpResult.second != -1) {
+//        if (matrix.equals(firstSolution) || matrix.equals(secondSolution)) {
+//            resultSolution.add(moveUpResult.second)
+//            return resultSolution
+//        } else {
+//            println("up:")
+//            println(matrix)
+//            calculateMatrix(moveUpResult.first, firstSolution, secondSolution, resultSolution, passedMatrix)
+//        }
+//    }
+//    if (!resultSolution.isEmpty()) {
+//        resultSolution.add(moveUpResult.second)
+//        return resultSolution
+//    }
+//
+//    val moveRightResult = moveRight(matrix, passedMatrix)
+//    if (moveRightResult.second != -1) {
+//        if (matrix.equals(firstSolution) || matrix.equals(secondSolution)) {
+//            resultSolution.add(moveRightResult.second)
+//            return resultSolution
+//        } else {
+//            println("right:")
+//            println(matrix)
+//            calculateMatrix(moveRightResult.first, firstSolution, secondSolution, resultSolution, passedMatrix)
+//        }
+//    }
+//    if (!resultSolution.isEmpty()) {
+//        resultSolution.add(moveRightResult.second)
+//        return resultSolution
+//    }
+//
+//    val moveDownResult = moveDown(matrix, passedMatrix)
+//    if (moveDownResult.second != -1) {
+//        if (matrix.equals(firstSolution) || matrix.equals(secondSolution)) {
+//            resultSolution.add(moveDownResult.second)
+//            return resultSolution
+//        } else {
+//            println("down:")
+//            println(matrix)
+//            calculateMatrix(moveDownResult.first, firstSolution, secondSolution, resultSolution, passedMatrix)
+//        }
+//    }
+//    if (!resultSolution.isEmpty()) {
+//        resultSolution.add(moveDownResult.second)
+//        return resultSolution
+//    }
+//
+//    val moveLeftResult = moveLeft(matrix, passedMatrix)
+//    if (moveLeftResult.second != -1) {
+//        if (matrix.equals(firstSolution) || matrix.equals(secondSolution)) {
+//            resultSolution.add(moveLeftResult.second)
+//            return resultSolution
+//        } else {
+//            println("left:")
+//            println(matrix)
+//            calculateMatrix(moveLeftResult.first, firstSolution, secondSolution, resultSolution, passedMatrix)
+//        }
+//    }
+//    if (!resultSolution.isEmpty()) {
+//        resultSolution.add(moveLeftResult.second)
+//        return resultSolution
+//    }
+//
+//    return listOf()
+//}
