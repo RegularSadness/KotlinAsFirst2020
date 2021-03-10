@@ -2,6 +2,8 @@
 
 package lesson11.task1
 
+import java.lang.IllegalArgumentException
+
 /**
  * Класс "Величина с размерностью".
  *
@@ -17,61 +19,159 @@ package lesson11.task1
  * - во всех остальных случаях следует бросить IllegalArgumentException
  */
 class DimensionalValue(value: Double, dimension: String) : Comparable<DimensionalValue> {
+    var originalValue: Double
+    var originalDimension: String
+
+    init {
+        var splitResult = dimension.split(" ")
+        if (splitResult.size == 2) {
+            originalValue = splitResult[0].toDouble()
+            originalDimension = splitResult[1]
+        } else {
+            originalDimension = dimension
+            originalValue = value
+        }
+    }
+
     /**
      * Величина с БАЗОВОЙ размерностью (например для 1.0Kg следует вернуть результат в граммах -- 1000.0)
      */
-    val value: Double get() = TODO()
+    val value: Double
+        get() {
+            for (dimension in Dimension.values()) {
+                if (dimension.abbreviation == originalDimension) {
+                    return originalValue
+                }
+            }
+            var dimensionWithoutPrefix = originalDimension.substring(1)
+            for (dimension in Dimension.values()) {
+                if (dimension.abbreviation == dimensionWithoutPrefix) {
+                    var prefix = originalDimension.substring(0, 1)
+                    var dimensionPrefix = findDimensionPrefix(prefix)
+                    return originalValue * dimensionPrefix.multiplier
+                }
+            }
+            throw IllegalArgumentException("Invalid dimension.")
+        }
+
+    private fun findDimensionPrefix(prefix: String): DimensionPrefix {
+        for (dimPrefix in DimensionPrefix.values()) {
+            if (dimPrefix.abbreviation == prefix) {
+                return dimPrefix
+            }
+
+        }
+        throw IllegalArgumentException("Invalid dimension prefix.")
+    }
 
     /**
      * БАЗОВАЯ размерность (опять-таки для 1.0Kg следует вернуть GRAM)
      */
-    val dimension: Dimension get() = TODO()
+    val dimension: Dimension
+        get() {
+            for (dimension in Dimension.values()) {
+                if (dimension.abbreviation == originalDimension) {
+                    return dimension
+                }
+            }
+            var dimensionWithoutPrefix = originalDimension.substring(1)
+            for (dimension in Dimension.values()) {
+                if (dimension.abbreviation == dimensionWithoutPrefix) {
+                    return dimension
+                }
+            }
+            throw IllegalArgumentException("Invalid dimension.")
+        }
+
 
     /**
      * Конструктор из строки. Формат строки: значение пробел размерность (1 Kg, 3 mm, 100 g и так далее).
      */
-    constructor(s: String) : this(TODO(), TODO())
+    constructor(s: String) : this(0.0, s)
 
     /**
      * Сложение с другой величиной. Если базовая размерность разная, бросить IllegalArgumentException
      * (нельзя складывать метры и килограммы)
      */
-    operator fun plus(other: DimensionalValue): DimensionalValue = TODO()
+    operator fun plus(other: DimensionalValue): DimensionalValue {
+        if (this.dimension == other.dimension) {
+            var abbreviation = Dimension.valueOf(this.dimension.toString()).abbreviation
+            var plusResult = this.value + other.value
+            return DimensionalValue(plusResult, abbreviation)
+        }
+        throw IllegalArgumentException("Invalid dimension.")
+    }
 
     /**
      * Смена знака величины
      */
-    operator fun unaryMinus(): DimensionalValue = TODO()
+    operator fun unaryMinus(): DimensionalValue = DimensionalValue(-originalValue, originalDimension)
 
     /**
      * Вычитание другой величины. Если базовая размерность разная, бросить IllegalArgumentException
      */
-    operator fun minus(other: DimensionalValue): DimensionalValue = TODO()
+    operator fun minus(other: DimensionalValue): DimensionalValue {
+        if (this.dimension == other.dimension) {
+            var abbreviation = Dimension.valueOf(this.dimension.toString()).abbreviation
+            var minusResult = this.value - other.value
+            return DimensionalValue(minusResult, abbreviation)
+        }
+        throw IllegalArgumentException("Invalid dimension.")
+    }
 
     /**
      * Умножение на число
      */
-    operator fun times(other: Double): DimensionalValue = TODO()
+    operator fun times(other: Double): DimensionalValue = DimensionalValue(originalValue * other, originalDimension)
 
     /**
      * Деление на число
      */
-    operator fun div(other: Double): DimensionalValue = TODO()
+    operator fun div(other: Double): DimensionalValue = DimensionalValue(originalValue / other, originalDimension)
 
     /**
      * Деление на другую величину. Если базовая размерность разная, бросить IllegalArgumentException
      */
-    operator fun div(other: DimensionalValue): Double = TODO()
+    operator fun div(other: DimensionalValue): Double {
+        if (this.dimension == other.dimension) {
+            return value / other.value
+        }
+        throw IllegalArgumentException("Invalid dimension.")
+    }
 
     /**
      * Сравнение на равенство
      */
-    override fun equals(other: Any?): Boolean = TODO()
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as DimensionalValue
+
+        if (originalValue != other.originalValue) return false
+        if (originalDimension != other.originalDimension) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = originalValue.hashCode()
+        result = 31 * result + originalDimension.hashCode()
+        return result
+    }
+
 
     /**
      * Сравнение на больше/меньше. Если базовая размерность разная, бросить IllegalArgumentException
      */
-    override fun compareTo(other: DimensionalValue): Int = TODO()
+    override fun compareTo(other: DimensionalValue): Int {
+        if (this.dimension == other.dimension) {
+            return value.toInt() - other.value.toInt()
+        }
+        throw IllegalArgumentException("Invalid dimension.")
+    }
+
+
 }
 
 /**
@@ -87,5 +187,7 @@ enum class Dimension(val abbreviation: String) {
  */
 enum class DimensionPrefix(val abbreviation: String, val multiplier: Double) {
     KILO("K", 1000.0),
-    MILLI("m", 0.001);
+    MILLI("m", 0.001),
+    SANTI("s", 0.01),
+    DECI("d", 0.1);
 }

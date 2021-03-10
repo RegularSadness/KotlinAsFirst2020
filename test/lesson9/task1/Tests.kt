@@ -49,4 +49,16 @@ class Tests {
             }
         }
     }
+
+    @Test
+    fun printMatrix() {
+        val matrix = createMatrix(3, 2, 0)
+        var value = 0
+        for (row in 0 until matrix.height) {
+            for (column in 0 until matrix.width) {
+                matrix[row, column] = value++
+            }
+        }
+        println(matrix)
+    }
 }
