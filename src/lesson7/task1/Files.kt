@@ -3,6 +3,7 @@
 package lesson7.task1
 
 import java.io.File
+import java.lang.StringBuilder
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -156,7 +157,32 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    TODO()
+    val reader = File(inputName).bufferedReader()
+    val writer = File(outputName).bufferedWriter()
+    var maxLength = 0
+    var fileContent = mutableListOf<String>()
+
+    reader.forEachLine {
+        if (it.length > maxLength) {
+            maxLength = it.length
+        }
+        fileContent.add(it.trim())
+    }
+
+    reader.close()
+
+    for (line in fileContent) {
+        var spaceCount = ((maxLength - line.length) / 2)
+        var stringBuilder = StringBuilder()
+        for (i in 1..spaceCount) {
+            stringBuilder.append(" ")
+        }
+        stringBuilder.append(line)
+        writer.write(stringBuilder.toString())
+        writer.newLine()
+    }
+
+    writer.close()
 }
 
 /**

@@ -25,28 +25,85 @@ class OpenHashSet<T>(val capacity: Int) {
     /**
      * Число элементов в хеш-таблице
      */
-    val size: Int get() = TODO()
+    val size: Int
+        get() {
+            var count = 0
+            for (element in elements) {
+                if (element != null) {
+                    count++
+                }
+            }
+            return count
+        }
 
     /**
      * Признак пустоты
      */
-    fun isEmpty(): Boolean = TODO()
+    fun isEmpty(): Boolean {
+        for (element in elements) {
+            if (element != null)
+                return false
+        }
+        return true
+    }
 
     /**
      * Добавление элемента.
      * Вернуть true, если элемент был успешно добавлен,
      * или false, если такой элемент уже был в таблице, или превышена вместимость таблицы.
      */
-    fun add(element: T): Boolean = TODO()
+    fun add(element: T): Boolean {
+        if (elements.contains(element) || !elements.contains(null)) {
+            return false
+        } else {
+            var index = element.hashCode() % elements.size
+            elements.set(index, element)
+            return true
+        }
+    }
 
     /**
      * Проверка, входит ли заданный элемент в хеш-таблицу
      */
-    operator fun contains(element: T): Boolean = TODO()
+    operator fun contains(element: T): Boolean = elements.contains(element)
 
     /**
      * Таблицы равны, если в них одинаковое количество элементов,
      * и любой элемент из второй таблицы входит также и в первую
      */
-    override fun equals(other: Any?): Boolean = TODO()
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as OpenHashSet<*>
+
+        if (size != other.size) return false
+        return arrayContainsAllElementsFromAnotherArray(
+            elements,
+            other.elements
+        ) && arrayContainsAllElementsFromAnotherArray(
+            other.elements,
+            elements)
+    }
+
+    private fun arrayContainsAllElementsFromAnotherArray(elements: Array<Any?>, other: Array<Any?>): Boolean {
+        for (element in elements) {
+            if (!other.contains(element))
+                return false
+        }
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = size
+        var hashSum = 0
+        for (element in elements) {
+            if (element != null) {
+                hashSum += element.hashCode()
+            }
+        }
+        result = 31 * result + hashSum
+        return result
+    }
 }
