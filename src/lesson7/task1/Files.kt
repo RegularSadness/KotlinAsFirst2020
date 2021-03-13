@@ -238,7 +238,7 @@ fun alignFileByWidth(inputName: String, outputName: String) {
     reader.close()
 
     for (line in fileContent) {
-        var wordsInLine = line.split(Regex("[-\\s]+")).toMutableList()
+        var wordsInLine = line.split(Regex("[\\s]+")).toMutableList()
         if (wordsInLine.size > 1) {
             var lengthSum = 0
             for (word in wordsInLine) {
