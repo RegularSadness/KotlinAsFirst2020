@@ -170,16 +170,19 @@ fun centerFile(inputName: String, outputName: String) {
     }
 
     reader.close()
-
-    for (line in fileContent) {
-        var spaceCount = ((maxLength - line.length) / 2)
-        var stringBuilder = StringBuilder()
-        for (i in 1..spaceCount) {
-            stringBuilder.append(" ")
+    if (fileContent.size <= 1) {
+        writer.write(fileContent[0])
+    } else {
+        for (line in fileContent) {
+            var spaceCount = ((maxLength - line.length) / 2)
+            var stringBuilder = StringBuilder()
+            for (i in 1..spaceCount) {
+                stringBuilder.append(" ")
+            }
+            stringBuilder.append(line)
+            writer.write(stringBuilder.toString())
+            writer.newLine()
         }
-        stringBuilder.append(line)
-        writer.write(stringBuilder.toString())
-        writer.newLine()
     }
 
     writer.close()
