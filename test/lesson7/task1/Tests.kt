@@ -132,6 +132,12 @@ Basic, Ruby, Swift.
     }
 
     @Test
+    fun testRegex(){
+        var resultStr = "Test     me".replace("\\s+".toRegex(), " ")
+        println(resultStr)
+    }
+
+    @Test
     @Tag("20")
     fun alignFileByWidth() {
         alignFileByWidth("input/width_in1.txt", "temp.txt")
