@@ -228,11 +228,11 @@ fun alignFileByWidth(inputName: String, outputName: String) {
     var fileContent = mutableListOf<String>()
 
     reader.forEachLine {
-        var formattedString = it.replace("\\s+".toRegex(), " ")
+        var formattedString = it.trim().replace("\\s+".toRegex(), " ")
         if (formattedString.length > maxLength) {
             maxLength = formattedString.length
         }
-        fileContent.add(formattedString.trim())
+        fileContent.add(formattedString)
     }
 
     reader.close()
@@ -244,9 +244,9 @@ fun alignFileByWidth(inputName: String, outputName: String) {
             for (word in wordsInLine) {
                 lengthSum += word.length
             }
-            while (lengthSum < maxLength - 1) {
+            while (lengthSum < maxLength) {
                 for (i in 0 until wordsInLine.size - 1) {
-                    if (lengthSum < maxLength - 1) {
+                    if (lengthSum < maxLength) {
                         wordsInLine[i] = wordsInLine[i].plus(" ")
                         lengthSum++
                     }
