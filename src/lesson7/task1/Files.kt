@@ -170,7 +170,11 @@ fun centerFile(inputName: String, outputName: String) {
     }
 
     reader.close()
-    if (fileContent.size <= 1) {
+    if (fileContent.size == 0) {
+        writer.close()
+        return
+    }
+    if (fileContent.size == 1) {
         writer.write(fileContent[0])
     } else {
         for (line in fileContent) {
