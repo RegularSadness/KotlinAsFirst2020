@@ -400,9 +400,25 @@ Suspendisse <s>et elit in enim tempus iaculis</s>.
  *
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
  */
-fun markdownToHtmlSimple(inputName: String, outputName: String) {
-    TODO()
-}
+fun markdownToHtmlSimple(inputName: String, outputName: String): Nothing = TODO()
+//    val reader = File(inputName).bufferedReader()
+//    val writer = File(outputName).bufferedWriter()
+//    var fileContent = mutableListOf<String>()
+//
+//    writer.write("<html><body>")
+//
+//    reader.forEachLine {
+//        var singleString = it
+//        fileContent.add(singleString)
+//    }
+//
+//    reader.close()
+//
+//
+//    writer.write("</html></body>")
+//    writer.close()
+//
+//}
 
 /**
  * Сложная (23 балла)

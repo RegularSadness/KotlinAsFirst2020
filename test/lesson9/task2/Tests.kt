@@ -409,12 +409,12 @@ class Tests {
                 listOf(9, 10, 11, 12), listOf(13, 15, 14, 0)
             )
         ).assertSolution()
-            createMatrix(
-                4, 4, listOf(
-                    listOf(5, 7, 9, 2), listOf(1, 12, 14, 15),
-                    listOf(3, 4, 6, 8), listOf(10, 11, 13, 0)
-                )
-            ).assertSolution()
+        createMatrix(
+            4, 4, listOf(
+                listOf(5, 7, 9, 2), listOf(1, 12, 14, 15),
+                listOf(3, 4, 6, 8), listOf(10, 11, 13, 0)
+            )
+        ).assertSolution()
         createMatrix(
             4, 4, listOf(
                 listOf(0, 1, 2, 3), listOf(4, 5, 6, 7),
