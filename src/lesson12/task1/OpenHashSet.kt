@@ -15,6 +15,7 @@ package lesson12.task1
  *
  * В конструктор хеш-таблицы передаётся её вместимость (максимальное количество элементов)
  */
+
 class OpenHashSet<T>(val capacity: Int) {
 
     /**
@@ -57,6 +58,9 @@ class OpenHashSet<T>(val capacity: Int) {
             return false
         } else {
             var index = element.hashCode() % elements.size
+            if (elements.get(index)!=null){
+                return false
+            }
             elements.set(index, element)
             return true
         }
