@@ -4,15 +4,16 @@ import java.io.File
 import java.lang.IllegalArgumentException
 import java.lang.RuntimeException
 import java.util.ArrayList
+import kotlin.math.max
 
-data class Coordinate(val x: Int, val y: Int) {
-    constructor(coordinate: Coordinate, x: Int, y: Int) :
-            this(coordinate.x + x, coordinate.y + y)
-
-    override fun toString(): String = "($x, $y)"
-}
-
-fun main(fileName: String, limit: Int): MutableList<Coordinate> = TODO()
+//data class Coordinate(val x: Int, val y: Int) {
+//    constructor(coordinate: Coordinate, x: Int, y: Int) :
+//            this(coordinate.x + x, coordinate.y + y)
+//
+//    override fun toString(): String = "($x, $y)"
+//}
+//
+//fun main(fileName: String, limit: Int): MutableList<Coordinate> = TODO()
 //
 //    val file = File(fileName)
 //    val lineCount = 9
@@ -165,5 +166,43 @@ fun main(fileName: String, limit: Int): MutableList<Coordinate> = TODO()
 //
 //fun moveRightAndUp(coordinate: Coordinate): Coordinate = Coordinate(coordinate, 2, 1)
 
+fun nameByPhone(index: Int): List<String> {
+    var nameIndex = mapOf<Int, List<String>>(4826 to listOf("Ivan", "Hubo"), 7387 to listOf("Petr"), 62946 to listOf("Maxim"))
 
+    var resultNames = nameIndex.get(index)
+    if (resultNames == null) {
+        throw IllegalArgumentException()
+    } else {
+        return resultNames
+    }
+}
+
+fun charSequence(chipCoords: String) {
+    var chipCoordsTest: String = "42 44 57 67 77 53 33 23 42 78"
+    var coordinates = chipCoords.split(" ").toMutableList()
+    var result = mutableListOf<String>()
+    var formatedString = mutableListOf<Int>()
+    var maxLength = 0
+    println(coordinates)
+
+    for (i in 0..coordinates.size - 1) {
+        var firstCoordinate = coordinates[i].toInt()
+        formatedString.add(firstCoordinate)
+        //println(firstCoordinate)
+        for (i in 0..coordinates.size - 2) {
+            var secondCoordinate = coordinates[i + 1].toInt()
+            //println(secondCoordinate + "!")
+            if ((firstCoordinate / 10) == (secondCoordinate / 10)) {
+                formatedString.add(secondCoordinate)
+                if(formatedString.size > maxLength) {
+                    maxLength = formatedString.size
+                    println(formatedString)
+                }
+                //println(formatedString)
+            }
+        }
+    }
+    //println(result)
+
+}
 

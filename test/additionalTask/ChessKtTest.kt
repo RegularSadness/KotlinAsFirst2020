@@ -1,11 +1,28 @@
-//package additionalTask
-//
-//import org.junit.jupiter.api.Assertions.assertEquals
-//import org.junit.jupiter.api.Assertions.assertThrows
-//import org.junit.jupiter.api.Test
-//import java.io.File
-//
-//internal class ChessKtTest {
+package additionalTask
+
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Test
+import java.io.File
+
+internal class ChessKtTest {
+
+    @Test
+    fun phoneBook() {
+        val actualList = nameByPhone(4826)
+//        println(actualList)
+        val expectedList = listOf<String>("Ivan", "Hubo")
+//        println(expectedList)
+        assertEquals(actualList, expectedList)
+    }
+
+    @Test
+    fun coordinates() {
+        val test = charSequence("42 44 57 67 77 53 33 23 43 78")
+    }
+}
+
+
 //
 //    @Test
 //    fun pathFindSuccess() {
