@@ -1,10 +1,6 @@
 package additionalTask
 
-import java.io.File
 import java.lang.IllegalArgumentException
-import java.lang.RuntimeException
-import java.util.ArrayList
-import kotlin.math.max
 
 //data class Coordinate(val x: Int, val y: Int) {
 //    constructor(coordinate: Coordinate, x: Int, y: Int) :
@@ -178,31 +174,41 @@ fun nameByPhone(index: Int): List<String> {
 }
 
 fun charSequence(chipCoords: String) {
-    var chipCoordsTest: String = "42 44 57 67 77 53 33 23 42 78"
+    var chipCoordsTest: String = "42 44 57 67 77 53 33 23 43 78"
     var coordinates = chipCoords.split(" ").toMutableList()
-    var result = mutableListOf<String>()
-    var formatedString = mutableListOf<Int>()
+    var result = mutableListOf<Int>()
+
     var maxLength = 0
-    println(coordinates)
+
+coordinates.sort()
+
+    for (i in 0..coordinates.size) {
+        if ((coordinates[i].toInt() / 10) > 8 || (coordinates[i].toInt() / 10) < 1
+            || (coordinates[i].toInt() % 10) > 8 || (coordinates[i].toInt() % 10) < 1 || (coordinates[i].length != 2)) {
+            throw IllegalArgumentException("Invalid argument")
+        }
+    }
 
     for (i in 0..coordinates.size - 1) {
         var firstCoordinate = coordinates[i].toInt()
-        formatedString.add(firstCoordinate)
+        var interimString = mutableListOf<Int>()
+        interimString.add(firstCoordinate)
         //println(firstCoordinate)
-        for (i in 0..coordinates.size - 2) {
-            var secondCoordinate = coordinates[i + 1].toInt()
+        var privValue = firstCoordinate
+            for (j in 0..coordinates.size - 2) {
+            var secondCoordinate = coordinates[j + 1].toInt()
             //println(secondCoordinate + "!")
-            if ((firstCoordinate / 10) == (secondCoordinate / 10)) {
-                formatedString.add(secondCoordinate)
-                if(formatedString.size > maxLength) {
-                    maxLength = formatedString.size
-                    println(formatedString)
+            if ((privValue / 10) == (secondCoordinate / 10) && (privValue % 10) == (secondCoordinate % 10 - 1)) {
+                privValue = secondCoordinate
+                interimString.add(secondCoordinate)
+                if (interimString.size > maxLength) {
+                    maxLength = interimString.size
+                    result = interimString
                 }
-                //println(formatedString)
             }
         }
     }
-    //println(result)
-
+    result.sort()
+    println(result)
 }
 

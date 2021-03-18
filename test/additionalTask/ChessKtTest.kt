@@ -18,7 +18,10 @@ internal class ChessKtTest {
 
     @Test
     fun coordinates() {
-        val test = charSequence("42 44 57 67 77 53 33 23 43 78")
+        val exception = assertThrows(IllegalArgumentException::class.java) {
+            charSequence("42 44 57 67 77 53 33 23 43 78 99")
+        }
+        assertEquals("Invalid argument", exception.message)
     }
 }
 
